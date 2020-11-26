@@ -1,16 +1,19 @@
 import by.gsu.pms.Channel;
 import by.gsu.pms.DomParser;
 import by.gsu.pms.Item;
+import by.gsu.pms.SaxParser;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Runner {
     public static final String URL = "https://news.tut.by/rss/auto/road.rss";
     private static Channel channel;
+    private static ArrayList<Item> items;
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         Scanner scanner = new Scanner(System.in);
@@ -36,17 +39,22 @@ public class Runner {
                     }
                     break;
                 }
-                //case 2 ->
+                case (2): {
+                    SaxParser.parse();
+                    break;
+                }
                 //case 3 ->1
                 case (4): {
 
                     isTrue = false;
+                    break;
                 }
                 default:
-                    System.out.println("Не правильный выбор!");
+                    System.out.println("Неправильный выбор!");
             }
 
 
         } while (isTrue);
     }
+
 }
