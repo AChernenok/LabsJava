@@ -1,42 +1,42 @@
 package by.gsu.pms;
 
-import java.util.ArrayList;
-
 public class Item {
-    private String numberItem;
-    private String numberTitle;
-    private String link;
+    private String itemTitle;
+    private String itemDescription;
+    private String itemLink;
 
-    public Item(String numberItem, String numberTitle, String link) {
-        this.numberItem = numberItem;
-        this.numberTitle = numberTitle;
-        this.link = link;
+    public Item(String itemTitle, String itemDescription, String itemLink) {
+        this.itemTitle = itemTitle;
+        this.itemDescription = itemDescription;
+        this.itemLink = itemLink;
     }
 
-    public Item() {
+    public String getItemTitle() {
+        return itemTitle;
     }
 
-    public String getNumberItem() {
-        return numberItem;
+    public void setItemTitle(String itemTitle) {
+        this.itemTitle = itemTitle;
     }
 
-    public void setNumberItem(String numberItem) {
-        this.numberItem = numberItem;
+    public String getItemDescription() {
+        return itemDescription;
     }
 
-    public String getNumberTitle() {
-        return numberTitle;
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
-    public void setNumberTitle(String numberTitle) {
-        this.numberTitle = numberTitle;
+    public String getItemLink() {
+        return itemLink;
     }
 
-    public String getLink() {
-        return link;
+    public void setItemLink(String itemLink) {
+        this.itemLink = itemLink;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    @Override
+    public String toString(){
+        return "News\nTitle: " + itemTitle + "\nLink: " + itemLink + "\nDescription: " + itemDescription;
     }
 }

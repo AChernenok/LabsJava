@@ -9,9 +9,6 @@ public class Channel {
         this.items = items;
     }
 
-    public Channel() {
-    }
-
     public ArrayList<Item> getItems() {
         return items;
     }

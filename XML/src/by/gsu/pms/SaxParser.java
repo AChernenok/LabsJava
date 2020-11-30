@@ -7,60 +7,83 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class SaxParser {
+    public static Channel channelObj;
 
-    public static void parse() throws ParserConfigurationException, SAXException, IOException {
+    public static Channel parse() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-
         XMLHandler handler = new XMLHandler();
-        parser.parse(new File("resources/tutby.xml"), handler);
+        parser.parse("resources/tutby.xml", handler);
+        return channelObj;
     }
 
     private static class XMLHandler extends DefaultHandler {
-        private static ArrayList<Item> items = new ArrayList<>();
-        private String lastElementName;
-        private String title;
-        private String link;
-        private String description;
+        private static final ArrayList<Item> items_t = new ArrayList<>();
+        private String title_t;
+        private String link_t;
+        private String description_t;
+        private Channel channel_t;
+
+        boolean title_b = false;
+        boolean link_b = false;
+        boolean description_b = false;
+
+
+        @Override
+        public void endDocument() {
+            channelObj = channel_t;
+        }
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) {
-            lastElementName = qName;
+            if (qName.equalsIgnoreCase("title")) {
+                title_b = true;
+            }
+            if (qName.equalsIgnoreCase("link")) {
+                link_b = true;
+            }
+            if (qName.equalsIgnoreCase("description")) {
+                description_b = true;
+            }
         }
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
             String information = new String(ch, start, length);
             information = information.replace("\n", "").trim();
-
             if (!information.isEmpty()) {
-                if (lastElementName.equals("title")) {
-                    title = information;
+                if (title_b) {
+                    title_t = information;
+                    title_b = false;
                 }
-                if (lastElementName.equals("link")) {
-                    link = information;
+                if (link_b) {
+                    link_t = information;
+                    link_b = false;
                 }
-                if (lastElementName.equals("description")) {
-                    description = information;
+                if (description_b) {
+                    description_t = information;
+                    description_b = false;
                 }
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) {
-            if ((title != null && title.isEmpty())
-                    && (description != null && description.isEmpty())
-                    && (link != null && link.isEmpty())) {
-                items.add(new Item(description, title, link));
+            if (qName.equals("item")) {
+                if ((title_t != null && !title_t.isEmpty())
+                        && (description_t != null && !description_t.isEmpty())
+                        && (link_t != null && !link_t.isEmpty())) {
+                    items_t.add(new Item(title_t, description_t, link_t));
+                    channel_t = new Channel(items_t);
+                }
+                title_t = null;
+                description_t = null;
+                link_t = null;
             }
-            title = null;
-            description = null;
-            link = null;
         }
 
     }
