@@ -1,18 +1,15 @@
-import by.gsu.pms.Channel;
-import by.gsu.pms.DomParser;
-import by.gsu.pms.Item;
-import by.gsu.pms.SaxParser;
+import by.gsu.pms.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Runner {
     public static final String URL = "https://news.tut.by/rss/auto/road.rss";
 
-    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException, XMLStreamException {
         Scanner scanner = new Scanner(System.in);
         int userInput;
         boolean isTrue = true;
@@ -36,9 +33,12 @@ public class Runner {
                     showResult(channel);
                     break;
                 }
-                //case 3 ->1
+                case (3):{
+                    channel = StaxParse.parse();
+                    showResult(channel);
+                    break;
+                }
                 case (4): {
-
                     isTrue = false;
                     break;
                 }

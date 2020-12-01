@@ -10,7 +10,7 @@ public class Item {
         this.itemDescription = itemDescription;
         this.itemLink = itemLink;
     }
-
+    public Item(){}
     public String getItemTitle() {
         return itemTitle;
     }
@@ -37,6 +37,8 @@ public class Item {
 
     @Override
     public String toString(){
-        return "News\nTitle: " + itemTitle + "\nLink: " + itemLink + "\nDescription: " + itemDescription;
+        return "Title: " + itemTitle +
+                "\nLink: " + itemLink +
+                "\nDescription: " + itemDescription;
     }
 }
